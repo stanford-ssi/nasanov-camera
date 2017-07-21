@@ -1,0 +1,15 @@
+{
+  "name": "nasonov",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Kai Marshland",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^2.0.3"
+  }
+}
