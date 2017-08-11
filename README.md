@@ -5,9 +5,14 @@ The name comes from the signalling pheremone bees use, [https://en.wikipedia.org
 ## Install
 1. Install ffmpeg
 2. Install ruby
+3. Run `bundle install`
 
 ## Running
-`ruby main.rb`
+Set your HABMC key as an environment variable, then
+
+```bash
+ruby main.rb
+```
 
 ## Contributing
 Please. 
