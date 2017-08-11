@@ -4,7 +4,7 @@ The name comes from the signalling pheremone bees use, [https://en.wikipedia.org
 
 ## Install
 1. Install ffmpeg
-2. Install ruby (tested with 2.3)
+2. Install ruby
 
 ## Running
 `ruby main.rb`
