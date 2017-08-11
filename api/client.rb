@@ -31,6 +31,12 @@ module HABMC
       end
     end
 
+    def find_mission_by_number(number)
+      missions.select {|mission|
+        mission.number == number
+      }.first
+    end
+
     private
 
     def habmc

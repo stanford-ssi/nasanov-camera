@@ -1,6 +1,34 @@
 require_relative 'api'
 
+threads = []
+
+# connect to api
 client = HABMC::Client.new ENV['HABMC_KEY']
+
+# get mission
+mission = nil
+
+while mission.nil?
+  puts 'Which mission is this a livestream for?'
+  mission_number = gets
+
+  mission = client.find_mission_by_number mission_number.strip
+
+  if mission.nil?
+    puts "Sorry, we couldn't find a mission with that number\n"
+  end
+
+end
+
+# notify HABMC of upcoming livestream
+threads << Thread.new do
+  sleep 10 # wait for stream to start
+
+  client.video_started_for mission.id
+end
+
+
+# start the stream
 
 command = [
     'ffmpeg',
@@ -12,3 +40,6 @@ command = [
 ].join ' '
 
 puts command
+
+# wait for any other threads to finish
+threads.map(&:join)
