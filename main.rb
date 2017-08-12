@@ -1,3 +1,5 @@
+require 'open3'
+
 require_relative 'api'
 
 threads = []
@@ -5,26 +7,28 @@ threads = []
 # connect to api
 client = HABMC::Client.new ENV['HABMC_KEY']
 
-# get mission
-mission = nil
+if false
+  # get mission
+  mission = nil
 
-while mission.nil?
-  puts 'Which mission is this a livestream for?'
-  mission_number = gets
+  while mission.nil?
+    puts 'Which mission is this a livestream for?'
+    mission_number = gets
 
-  mission = client.find_mission_by_number mission_number.strip
+    mission = client.find_mission_by_number mission_number.strip
 
-  if mission.nil?
-    puts "Sorry, we couldn't find a mission with that number\n"
+    if mission.nil?
+      puts "Sorry, we couldn't find a mission with that number\n"
+    end
+
   end
 
-end
+  # notify HABMC of upcoming livestream
+  threads << Thread.new do
+    sleep 10 # wait for stream to start
 
-# notify HABMC of upcoming livestream
-threads << Thread.new do
-  sleep 10 # wait for stream to start
-
-  client.video_started_for mission.id
+    client.video_started_for mission.id
+  end
 end
 
 
@@ -40,6 +44,22 @@ command = [
 ].join ' '
 
 puts command
+
+`#{command}`
+
+# Open3.popen3(command) do |stdout, stderr, status, thread|
+#   threads << Thread.new do
+#     while line = stdout.gets
+#       puts line
+#     end
+#   end
+#
+#   threads << Thread.new do
+#     while line = stderr.gets
+#       puts line
+#     end
+#   end
+# end
 
 # wait for any other threads to finish
 threads.map(&:join)

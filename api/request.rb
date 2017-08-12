@@ -32,7 +32,7 @@ module HABMC
     def prepare(path)
       path = "/#{path}" unless path[0] == '/'
 
-      "http://localhost:3000#{path}"
+      "https://habmc.stanfordssi.org#{path}"
     end
   end
 
